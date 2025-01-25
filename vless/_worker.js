@@ -1,8 +1,8 @@
 import { connect } from "cloudflare:sockets";
 
 const proxyListURL = 'https://raw.githubusercontent.com/jaka2m/botak/refs/heads/main/cek/proxyList.txt';
-const namaWeb = 'GEO PROJECT'
-const telegramku = 'https://t.me/sampiiiiu'
+const namaWeb = 'JEMBUT VPN'
+const telegramku = 'https://t.me/ybbar'
 const wildcards = [
   'ava.game.naver.com',
   'quiz.int.vidio.com',
@@ -75,7 +75,7 @@ export default {
       const CHECK_API = `${CHECK_API_BASE}/check?ip=`;
       
       // Handle IP check
-      if (url.pathname === "/geo-ip") {
+      if (url.pathname === "/fuckyou") {
         const ip = url.searchParams.get("ip");
 
         if (!ip) {
@@ -165,12 +165,12 @@ export default {
         }
       }
       
-      const geovpn = url.hostname;
+      const jembut = url.hostname;
       const type = url.searchParams.get('type') || 'mix';
       const tls = url.searchParams.get('tls') !== 'false';
       const wildcard = url.searchParams.get('wildcard') === 'true';
-      const bugs = url.searchParams.get('bug') || geovpn;
-      const geo81 = wildcard ? `${bugs}.${geovpn}` : geovpn;
+      const bugs = url.searchParams.get('bug') || jembut;
+      const geo81 = wildcard ? `${bugs}.${jembut}` : jembut;
       const country = url.searchParams.get('country');
       const limit = parseInt(url.searchParams.get('limit'), 10); // Ambil nilai limit
       let configs;
@@ -212,7 +212,7 @@ export default {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>GeoVPN - Your Ultimate VPN Solution</title>
+  <title>JEMBUT - Your Ultimate VPN Solution</title>
   <style>
     /* Reset dan Gaya Dasar */
     * {
@@ -351,7 +351,7 @@ export default {
 <body>
   <!-- Header -->
   <header>
-    <h1>GeoVPN</h1>
+    <h1>JEMBUT</h1>
     <p>Your Ultimate VPN Solution for Secure and Fast Internet</p>
   </header>
 
@@ -382,7 +382,7 @@ export default {
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2025 GeoVPN | <a href="/privacy-policy">Privacy Policy</a> | <a href="/terms-of-service">Terms of Service</a></p>
+    <p>&copy; 2025 JEMBUT | <a href="/privacy-policy">Privacy Policy</a> | <a href="/terms-of-service">Terms of Service</a></p>
   </footer>
 </body>
 </html>
@@ -563,7 +563,7 @@ async function handleSubRequest(hostnem) {
 <body>
     <div class="container">
         <div class="card">
-            <h1 class="title">Geo Project</h1>
+            <h1 class="title">JEMBUT VPN</h1>
             <form id="subLinkForm">
                 <div class="form-group">
                     <label for="app">Aplikasi</label>
@@ -1109,7 +1109,7 @@ function buildCountryFlag() {
         const modifiedHostName = selectedWildcard ? `${selectedWildcard}.${hostName}` : hostName;
         const url = new URL(request.url);
        const BASE_URL = `https://${url.hostname}`; 
-       const CHECK_API = `${BASE_URL}/geo-ip?ip=`; 
+       const CHECK_API = `${BASE_URL}/fuckyou?ip=`; 
         const ipPort = `${config.ip}:${config.port}`;
         const healthCheckUrl = `${CHECK_API}${ipPort}`;
 
@@ -2623,7 +2623,7 @@ async function generateClashSub(type, bug, geo81, tls, country = null, limit = n
       custom: ${geo81}`;
     }
   }
-  return `#### BY : GEO PROJECT #### 
+  return `#### BY : JEMBUT VPN #### 
 
 port: 7890
 socks-port: 7891
@@ -2842,7 +2842,7 @@ async function generateSurfboardSub(type, bug, geo81, tls, country = null, limit
 ${ispName} = trojan, ${bug}, 443, password = ${UUIDS}, udp-relay = true, skip-cert-verify = true, sni = ${geo81}, ws = true, ws-path = /${proxyHost}:${proxyPort}, ws-headers = Host:"${geo81}"\n`;
     }
   }
-  return `#### BY : GEO PROJECT #### 
+  return `#### BY : JEMBUT VPN #### 
 
 [General]
 dns-server = system, 108.137.44.39, 108.137.44.9, puredns.org:853
@@ -3332,7 +3332,7 @@ async function generateHusiSub(type, bug, geo81, tls, country = null, limit = nu
     },`;
     }
   }
-  return `#### BY : GEO PROJECT #### 
+  return `#### BY : JEMBUT VPN #### 
 
 {
   "dns": {
@@ -3660,7 +3660,7 @@ async function generateSingboxSub(type, bug, geo81, tls, country = null, limit =
     },`;
     }
   }
-  return `#### BY : GEO PROJECT #### 
+  return `#### BY : JEMBUT VPN #### 
 
 {
   "log": {
@@ -3962,7 +3962,7 @@ async function generateNekoboxSub(type, bug, geo81, tls, country = null, limit =
     },`;
     }
   }
-  return `#### BY : GEO PROJECT #### 
+  return `#### BY : JEMBUT VPN #### 
 
 {
   "dns": {
@@ -4271,7 +4271,7 @@ function generateUUIDv4() {
   const randomValues = crypto.getRandomValues(new Uint8Array(16));
   randomValues[6] = (randomValues[6] & 0x0f) | 0x40;
   randomValues[8] = (randomValues[8] & 0x3f) | 0x80;
-  return [
+  return [  
     randomValues[0].toString(16).padStart(2, '0'),
     randomValues[1].toString(16).padStart(2, '0'),
     randomValues[2].toString(16).padStart(2, '0'),
