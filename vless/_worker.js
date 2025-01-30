@@ -1,6 +1,6 @@
 import { connect } from "cloudflare:sockets";
 
-const proxyListURL = 'https://raw.githubusercontent.com/akbRRksh/vless/refs/heads/main/cek/proxyList.txt';
+const proxyListURL = 'https://raw.githubusercontent.com/jaka2m/botak/refs/heads/main/cek/proxyList.txt';
 const namaWeb = 'JEMBUT VPN'
 const telegramku = 'https://t.me/ybbar'
 const wildcards = [
