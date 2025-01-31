@@ -410,14 +410,14 @@ export default {
       
       <div class="cta-grid">
         <div class="cta-card" data-aos="zoom-in">
-          <div class="cta-icon">🔒</div>
+          <div class="cta-icon">🌍</div>
           <h3>Global Network</h3>
           <p>1500+ servers in 95 countries with 10Gbps bandwidth</p>
           <a href="/web" class="btn" style="margin-top: 1.5rem;">Browse Freely</a>
         </div>
 
         <div class="cta-card" data-aos="zoom-in" data-aos-delay="100">
-          <div class="cta-icon">🌍</div>
+          <div class="cta-icon">📎</div>
           <h3>Subscription</h3>
           <p>Subscription link with perfect generator</p>
           <a href="/vpn" class="btn" style="margin-top: 1.5rem;">Get Subscription</a>
