@@ -206,184 +206,356 @@ export default {
           // Konten untuk root dengan pengalihan otomatis ke /web setelah 3 detik
           return new Response(
             `<!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>JEMBUT - Your Ultimate VPN Solution</title>
+  <title>JEMBUT VPN - Next-Gen Privacy Solution</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
-    /* Reset dan Gaya Dasar */
+    :root {
+      --primary: #00ff88;
+      --secondary: #00ffff;
+      --accent: #7b61ff;
+      --dark: #0a0f1a;
+      --light: #e0ffff;
+      --gradient: linear-gradient(135deg, #00ff88 0%, #7b61ff 50%, #00ffff 100%);
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
-      font-family: 'Arial', sans-serif;
-      line-height: 1.6;
-      background: linear-gradient(to bottom, #e3f2fd, #ffffff);
-      color: #333;
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      color: var(--light);
       overflow-x: hidden;
     }
 
-    /* Header */
-    header {
-      background: linear-gradient(to right, #0077b6, #00b4d8);
-      color: white;
-      text-align: center;
-      padding: 80px 20px;
-      clip-path: ellipse(100% 75% at 50% 25%);
+    .hero {
       position: relative;
-    }
-    header h1 {
-      font-size: 3.8em;
-      margin-bottom: 10px;
-      color: #ffdd00;
-      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-      animation: slideDown 1s ease-out;
-    }
-    header p {
-      font-size: 1.4em;
-      opacity: 0.9;
-    }
-    @keyframes slideDown {
-      from {
-        transform: translateY(-50px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
+      padding: 8rem 2rem 6rem;
+      background: radial-gradient(circle at 50% 50%, rgba(0,255,136,0.1) 0%, rgba(0,0,0,0) 50%);
+      overflow: hidden;
     }
 
-    /* Call to Action */
-    .cta {
-      text-align: center;
-      margin: 40px 0;
-      animation: fadeIn 1.5s ease-in-out;
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.05;
+      z-index: -1;
     }
-    .cta-button {
-      background: #ff5733;
-      color: white;
-      padding: 15px 40px;
-      font-size: 1.3em;
-      border: none;
-      border-radius: 30px;
-      text-decoration: none;
-      display: inline-block;
+
+    #threejs-canvas {
+      mix-blend-mode: screen;
+      opacity: 0.3;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 4rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: rgba(224,255,255,0.8);
+      max-width: 600px;
+      margin: 0 auto 3rem;
+    }
+
+    .cta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto 6rem;
+    }
+
+    .cta-card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(12px);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.1);
       transition: all 0.3s ease;
-      margin: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-    .cta-button:hover {
-      background: #c70039;
-      transform: scale(1.1);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-    }
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
     }
 
-    /* Features Section */
+    .cta-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .cta-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
     .features {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 30px;
-      padding: 40px 10px;
-    }
-    .feature {
-      background: white;
-      border-radius: 15px;
-      padding: 25px;
-      text-align: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      flex: 1;
-      max-width: 300px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .feature:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    }
-    .feature h3 {
-      color: #0077b6;
-      margin-bottom: 15px;
-    }
-    .feature p {
-      font-size: 1em;
-      color: #666;
-    }
-    .feature-icon {
-      font-size: 3em;
-      color: #0077b6;
-      margin-bottom: 15px;
+      padding: 6rem 2rem;
+      background: linear-gradient(to bottom, rgba(10,15,26,1) 0%, rgba(12,18,30,1) 100%);
     }
 
-    /* Footer */
-    footer {
-      background: linear-gradient(to right, #0077b6, #00b4d8);
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-      font-size: 0.9em;
-      clip-path: ellipse(100% 75% at 50% 25%);
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    footer a {
-      color: #ffdd00;
+
+    .feature-card {
+      background: rgba(255,255,255,0.02);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 180deg at 50% 50%, var(--primary) 0%, var(--secondary) 100%);
+      opacity: 0.1;
+      animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+      100% { transform: rotate(360deg); }
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      background: var(--gradient);
+      color: var(--dark);
       text-decoration: none;
-      transition: color 0.3s ease;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
     }
-    footer a:hover {
-      color: #ff5733;
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(0,255,136,0.3);
+    }
+
+    footer {
+      padding: 4rem 2rem;
+      background: rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    
+    #threejs-canvas {
+      mix-blend-mode: add;
+      opacity: 0.5 !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      pointer-events: none;
+      filter: drop-shadow(0 0 15px rgba(0,255,136,0.3));
+    }
+
+    @media (max-width: 768px) {
+      .title { font-size: 2.5rem; }
+      .subtitle { font-size: 1rem; }
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <h1>JEMBUT</h1>
-    <p>Your Ultimate VPN Solution for Secure and Fast Internet</p>
-  </header>
+  <section class="hero" data-aos="fade-up">
+    <canvas id="threejs-canvas"></canvas>
+    <div class="hero-content">
+      <h1 class="title">Secure Your Digital Life</h1>
+      <p class="subtitle">Premium VPN service with military-grade encryption and global high-speed servers</p>
+      
+      <div class="cta-grid">
+        <div class="cta-card" data-aos="zoom-in">
+          <div class="cta-icon">🔒</div>
+          <h3>Global Network</h3>
+          <p>1500+ servers in 95 countries with 10Gbps bandwidth</p>
+          <a href="/web" class="btn" style="margin-top: 1.5rem;">Get Protected</a>
+        </div>
 
-  <!-- Call to Action -->
-  <div class="cta">
-    <a href="/web" class="cta-button">Go to Web</a>
-    <a href="/vpn" class="cta-button">Generate Sub Links</a>
-  </div>
+        <div class="cta-card" data-aos="zoom-in" data-aos-delay="100">
+          <div class="cta-icon">🌍</div>
+          <h3>Subscription</h3>
+          <p>Subscription link with perfect generator</p>
+          <a href="/vpn" class="btn" style="margin-top: 1.5rem;">Browse Freely</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- Features Section -->
-  <div class="features">
-    <div class="feature">
-      <div class="feature-icon">🔒</div>
-      <h3>Secure</h3>
-      <p>Protect your data and privacy with top-tier encryption.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">⚡</div>
-      <h3>Fast</h3>
-      <p>Enjoy high-speed connections with optimized servers.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">✔️</div>
-      <h3>Reliable</h3>
-      <p>24/7 uptime with guaranteed performance and support.</p>
-    </div>
-  </div>
+  <section class="features">
+    <div class="feature-grid">
+      <div class="feature-card" data-aos="fade-right">
+        <h3>🚀 Lightning Speed</h3>
+        <p>Optimized servers with WireGuard® protocol for maximum performance</p>
+      </div>
 
-  <!-- Footer -->
+      <div class="feature-card" data-aos="fade-up">
+        <h3>🔑 Zero Logs Policy</h3>
+        <p>Strict no-logs policy verified by independent auditors</p>
+      </div>
+
+      <div class="feature-card" data-aos="fade-left">
+        <h3>💻 Multi-Platform</h3>
+        <p>Apps for all devices: Windows, Mac, iOS, Android, Linux</p>
+      </div>
+    </div>
+  </section>
+
   <footer>
-    <p>&copy; 2025 JEMBUT | <a href="/privacy-policy">Privacy Policy</a> | <a href="/terms-of-service">Terms of Service</a></p>
+    <p>&copy; 2024 JEMBUT VPN | <a href="/privacy" style="color: var(--primary);">Privacy Policy</a></p>
+    <div style="margin-top: 2rem;">
+      <a href="https://t.me/ybbar" target="_blank" style="color: var(--light); text-decoration: none; margin: 0 1rem;">
+        📢 Join Our Telegram
+      </a>
+    </div>
   </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    const initThreeJS = () => {
+      const canvas = document.querySelector('#threejs-canvas');
+      
+      if(!WebGLRenderingContext){
+        canvas.remove();
+        return;
+      }
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        alpha: true,
+        antialias: true
+      });
+
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // Brighter Wireframe Sphere
+      const geometry = new THREE.IcosahedronGeometry(3, 2);
+      const material = new THREE.MeshBasicMaterial({
+        color: new THREE.Color('#00ff88'),
+        wireframe: true,
+        transparent: true,
+        opacity: 0.3
+      });
+
+      const sphere = new THREE.Mesh(geometry, material);
+      scene.add(sphere);
+
+      // Enhanced Particles
+      const particlesGeometry = new THREE.BufferGeometry();
+      const particlesCnt = 1000;
+      const posArray = new Float32Array(particlesCnt * 3);
+
+      for(let i = 0; i < particlesCnt * 3; i++) {
+        posArray[i] = (Math.random() - 0.5) * 5;
+      }
+
+      particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+      const particlesMaterial = new THREE.PointsMaterial({
+        size: 0.015,
+        color: new THREE.Color('#00ffff'),
+        sizeAttenuation: true,
+        transparent: true,
+        opacity: 0.8
+      });
+      
+      const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+      scene.add(particlesMesh);
+
+      // Lighting
+      const ambientLight = new THREE.AmbientLight(0x00ff88, 0.3);
+      scene.add(ambientLight);
+
+      const pointLight = new THREE.PointLight(0x00ffff, 0.5);
+      pointLight.position.set(5, 5, 5);
+      scene.add(pointLight);
+
+      camera.position.z = 8;
+
+      // Animation
+      const animate = () => {
+        requestAnimationFrame(animate);
+        
+        sphere.rotation.x += 0.002;
+        sphere.rotation.y += 0.002;
+        particlesMesh.rotation.y += 0.001;
+        
+        renderer.render(scene, camera);
+      }
+
+      animate();
+
+      // Event Listeners
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        sphere.rotation.y = (e.clientX * 0.0005) - 1;
+        sphere.rotation.x = (e.clientY * 0.0005) - 0.5;
+        particlesMesh.rotation.x = e.clientY * 0.0001;
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      AOS.init({
+        duration: 1000,
+        once: true,
+        easing: 'ease-out-quart'
+      });
+      
+      initThreeJS();
+    });
+  </script>
 </body>
 </html>
 
